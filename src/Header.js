@@ -8,7 +8,7 @@ import {withAuth0} from '@auth0/auth0-react';
 import LogoutButton from './components/LogoutButton';
 class Header extends React.Component {
   render() {
-    // const isAuthenticated=this.props.auth0.isAuthenticated;
+    const isAuthenticated=this.props.auth0.isAuthenticated;
 
 
     return(
@@ -19,22 +19,11 @@ class Header extends React.Component {
         <Link to="/profile">Profile</Link>
         {/* TODO: if the user is logged in, render the `LogoutButton` - if the user is logged out, render the `LoginButton` */}
        
-        {this.props.auth0.isAuthenticated &&
+  
 
-<LogoutButton/>
-
-}
-
-{!this.props.auth0.isAuthenticated &&
-
-<LoginButton/>
-
-}
-
-
-        {/* {
+        {
   isAuthenticated ? <LogoutButton/> : <LoginButton/>
-} */}
+}
       </Navbar>
     );
   }
