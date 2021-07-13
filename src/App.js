@@ -46,6 +46,29 @@ class App extends React.Component {
     } catch (error) {
       console.log(error);
     }}
+
+    
+  // localhost:3001/addCat?catName=fluffy&catBreed=baldi&ownerName=razan
+  addBook = async(event) =>{
+    event.preventDefault();
+    let bookName = event.target.bookName.value;
+    let bookDescribtion = event.target.bookDescribtion.value;
+    let ownerName = this.state.userEmail
+
+    const bookFormData = {
+      bookName :event.target.bookName.value,
+      bookDescribtion :event.target.bookDescribtion.value,
+      ownerName :this.state.userEmail
+    }
+    // let booksData = await axios.get(`${this.state.server}/addBook?bookName=${bookName}&bookDescribtion=${bookDescribtion}&ownerName=${userEmail}`)
+
+    let booksData = await axios.post(`${this.state.server}/addBook`,bookFormData)
+
+    this.setState({
+      books: booksData.data
+    })
+
+  }
   
   render() {
     
