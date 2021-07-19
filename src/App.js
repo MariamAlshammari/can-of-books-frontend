@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import Header from './Header';
 // import IsLoadingAndError from './IsLoadingAndError';
 import Footer from './Footer';
@@ -18,7 +18,7 @@ class App extends React.Component {
   
   render() {
     
-    console.log('app', this.props);
+    // console.log('app', this.props);
     return (
       <>
         <Router>

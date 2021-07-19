@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { withAuth0 } from '@auth0/auth0-react';
-import axios from 'axios'
+// import { withAuth0 } from '@auth0/auth0-react';
+// import axios from 'axios'
 import Card from 'react-bootstrap/Card'
 
 class Mycard extends React.Component {
@@ -28,6 +28,7 @@ class Mycard extends React.Component {
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
+                                <button onClick={this.props.addNewBook} >Add Book</button>
                             </div>
                         )
                     })
