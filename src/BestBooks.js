@@ -7,7 +7,9 @@ import axios from 'axios'
 import Mycard from './components/Mycard';
 // import Card from 'react-bootstrap/Card'
 import BookFormModal from './components/BookFormModal';
+
 import { findAllByDisplayValue } from '@testing-library/react';
+import UpdateBookForm from './components/UpdateBookForm';
 
 class MyFavoriteBooks extends React.Component {
 
@@ -17,7 +19,14 @@ class MyFavoriteBooks extends React.Component {
       bookArr: [],
       showBooksComponent: false,
       userEmail: '',
-      showModal:false
+      showModal:false,
+      showModal2:false,
+      showUpdateForm: false,
+      idx: 0,
+      name: '',
+      description: '',
+      status:'',
+      img:''
 
     }
   }
@@ -55,10 +64,16 @@ class MyFavoriteBooks extends React.Component {
   })
   console.log('hi');
   }
+  showFormModal2=()=>{
+    this.setState({
+      showModal2:true
+    
+  })}
 
   handleClose=()=>{
     this.setState({
-      showModal:false
+      showModal:false,
+      showModal2:false
     })
   }
   
@@ -111,6 +126,41 @@ try{
     })
 
   }
+
+  showUpdateBookForm=async(idx)=>{
+    console.log('update',idx);
+    await this.setState({
+      showUpdateForm: true,
+      idx: idx,
+      showModal2:true,
+    
+      name: this.state.bookArr[idx].name,
+      description: this.state.bookArr[idx].description,
+      status: this.state.bookArr[idx].status,
+      img: this.state.bookArr[idx].img
+      
+    })
+
+    console.log('hhh',this.state.description)
+  }
+
+  updateBook=async(e)=>{
+    e.preventDefault();
+    let bookFormData={
+      name: e.target.bookname.value,
+      description: e.target.bookDesc.value,
+      status: e.target.bookStatus.value,
+      img: e.target.bookImg.value,
+      userEmail:this.state.userEmail
+    }
+    let booksData=await axios.put(`${process.env.REACT_APP_PORT}/updateBook/${this.state.idx}`,bookFormData)
+
+    this.setState({
+      bookArr: booksData.data
+    })
+
+  }
+
   render() {
     return (
 
@@ -121,12 +171,24 @@ try{
             This is a collection of my favorite books
           </p>
 
-          <Mycard bookArr={this.state.bookArr} showBooksComponent={this.state.showBooksComponent} deleteBook={this.deleteBook}/>
+          <Mycard bookArr={this.state.bookArr} showBooksComponent={this.state.showBooksComponent} deleteBook={this.deleteBook} showUpdateBookForm={this.showUpdateBookForm}/>
 
           <button onClick={this.showFormModal}>Add Book</button>
 
 
-          <BookFormModal  showModal={this.state.showModal} addNewBook={this.addNewBook} handleClose={this.handleClose}showFormModal={this.showFormModal} />
+          <BookFormModal  showModal={this.state.showModal}  handleClose={this.handleClose}showFormModal={this.showFormModal}addNewBook={this.addNewBook} />
+          
+          {this.state.showUpdateForm &&
+          <UpdateBookForm
+            name={this.state.name}
+            description={this.state.description}
+            status={this.state.status}
+            img={this.state.img}
+            updateBook = {this.updateBook}
+            showModal2={this.state.showModal2} handleClose={this.handleClose}showFormModal2={this.showFormModal2}
+            
+            
+          />}
         </>
       </Jumbotron>
 
