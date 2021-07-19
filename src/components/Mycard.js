@@ -26,9 +26,9 @@ class Mycard extends React.Component {
                                         <Card.Text>
                                             {val.status}
                                         </Card.Text>
+                                <button onClick={()=>this.props.deleteBook(idx)} >Delete Book</button>
                                     </Card.Body>
                                 </Card>
-                                <button onClick={this.props.addNewBook} >Add Book</button>
                             </div>
                         )
                     })
